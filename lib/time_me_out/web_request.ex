@@ -14,6 +14,7 @@ defmodule TimeMeOut.WebRequest do
 
   # Server Callbacks
   def init([]) do
+    IO.puts "Starting WebRequest #{inspect self}"
     {:ok, %TimeMeOut.WebRequest{}}
   end
 

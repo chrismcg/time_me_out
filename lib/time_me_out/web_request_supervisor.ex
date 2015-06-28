@@ -12,7 +12,7 @@ defmodule TimeMeOut.WebRequestSupervisor do
 
   def init([]) do
     children = [
-      worker(TimeMeOut.WebRequest, [])
+      worker(TimeMeOut.WebRequest, [], restart: :temporary)
     ]
 
     opts = [strategy: :simple_one_for_one]
