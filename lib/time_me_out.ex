@@ -9,6 +9,10 @@ defmodule TimeMeOut do
     Task.async(TimeMeOut.TimedJobSupervisor, :perform_job, [some_job_arg, job_timeout])
   end
 
+  def handle_request(params, reply_timeout \\ 200, worker_timeout \\ 1000) do
+    TimeMeOut.WebRequestSupervisor.handle_request(params, reply_timeout, worker_timeout)
+  end
+
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
@@ -16,7 +20,8 @@ defmodule TimeMeOut do
 
     children = [
       # Define workers and child supervisors to be supervised
-      supervisor(TimeMeOut.TimedJobSupervisor, [])
+      supervisor(TimeMeOut.TimedJobSupervisor, []),
+      supervisor(TimeMeOut.WebRequestSupervisor, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
